@@ -21,23 +21,26 @@ class ListViewController: UIViewController, UITableViewDataSource, UISearchBarDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         tableView.dataSource = self
+        tableView.delegate = self
         
         findMoviesByTitle(query: "last")
         
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
         self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.title = "Movies"
     }
     
     // MARK: Buisness Logic
     
     func findMoviesByTitle(query: String) {
         Task {
-            movies = await MovieProvider.findMoviesByTitle(query: query)
+            let result = await MovieProvider.findMoviesByTitle(query: query)
             DispatchQueue.main.async {
+                self.movies = result
                 self.tableView.reloadData()
             }
         }
@@ -68,15 +71,19 @@ class ListViewController: UIViewController, UITableViewDataSource, UISearchBarDe
     
     // MARK: Navigation
     
-    /*
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let detailViewController = segue.destination as! DetailViewController
-        let indexPath = tableView.indexPathForSelectedRow!
-        let recipe = recipes[indexPath.row]
-        detailViewController.recipe = recipe
-        tableView.deselectRow(at: indexPath, animated: true)
+        if segue.identifier == "ShowMovieDetail",
+           let detailVC = segue.destination as? DetailViewController,
+           let indexPath = tableView.indexPathForSelectedRow {
+            let movie = movies[indexPath.row]
+            detailVC.movie = movie
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
-    */
-    
+}
+
+extension ListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "ShowMovieDetail", sender: self)
+    }
 }

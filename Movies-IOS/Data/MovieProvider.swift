@@ -10,7 +10,7 @@ import Foundation
 class MovieProvider {
     
     static func findMoviesByTitle(query: String) async -> [Movie] {
-        guard let url = URL(string: "http://www.omdbapi.com/?t=\(query)&apikey=c802cc1a") else {
+        guard let url = URL(string: "https://www.omdbapi.com/?t=\(query)&apikey=c802cc1a") else {
             return []
         }
         do {
