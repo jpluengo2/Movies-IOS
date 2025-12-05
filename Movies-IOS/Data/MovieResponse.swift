@@ -8,7 +8,7 @@
 import Foundation
 
 struct MovieResponse: Codable {
-    let movies: [Movie]
+    let Search: [Movie]
 }
 
 struct Movie: Codable {
@@ -16,9 +16,9 @@ struct Movie: Codable {
     let Title: String
     let Year: String
     let Poster: String
-    let Plot: String
-    let Runtime: String
-    let Director: String
-    let Genre: String
-    let Country: String
+    let Plot: String?
+    let Runtime: String?
+    let Director: String?
+    let Genre: String?
+    let Country: String?
 }

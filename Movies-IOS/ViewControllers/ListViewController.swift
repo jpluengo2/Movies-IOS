@@ -23,7 +23,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UISearchBarDe
         super.viewDidLoad()
         
         tableView.dataSource = self
-        tableView.delegate = self
+        //tableView.delegate = self
         
         findMoviesByTitle(query: "last")
         
@@ -82,8 +82,8 @@ class ListViewController: UIViewController, UITableViewDataSource, UISearchBarDe
     }
 }
 
-extension ListViewController: UITableViewDelegate {
+/*extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "ShowMovieDetail", sender: self)
     }
-}
+}*/
